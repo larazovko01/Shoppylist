@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Shopping Liste</h1>
+<hr>
+<h3>Nova lista</h3>
+<form action="/dodaj-listu" method="POST" class="mb-4">
+    <div class="mb-3">
+        <label class="form-label">
+            Trgovina
+        </label>
+        <input
+                type="text"
+                name="trgovina"
+                class="form-control"
+                required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">
+            Datum
+        </label>
+        <input
+                type="date"
+                name="datum"
+                class="form-control"
+                required>
+    </div>
+    <button
+            type="submit"
+            class="btn btn-primary">
+        Dodaj listu
+    </button>
+</form>
+<form method="GET" action="/liste" class="mb-3">
+    <div class="row">
+        <div class="col-md-4">
+            <input
+                    type="text"
+                    name="trgovina"
+                    class="form-control"
+                    placeholder="Unesite trgovinu">
+        </div>
+        <div class="col-md-2">
+            <button
+                    type="submit"
+                    class="btn btn-primary">
+                Filtriraj
+            </button>
+        </div>
+        <div class="col-md-2">
+            <a
+                    href="/liste"
+                    class="btn btn-secondary">
+                Prikaži sve
+            </a>
+        </div>
+    </div>
+</form>
+<table class="table table-striped shadow-sm">
+    <thead>
+    <tr>
+        <th>Trgovina</th>
+        <th>Datum</th>
+        <th>Obriši</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for lista in liste %}
+    <tr>
+
+        <td>
+            <a href="/liste/{{ lista.id }}">
+                {{ lista.trgovina }}
+            </a>
+        </td>
+
+        <td>{{ lista.datum[8:10] }}.{{ lista.datum[5:7] }}.{{ lista.datum[0:4] }}</td>
+
+        <td>
+
+            <form
+                    action="/obrisi-listu/{{ lista.id }}"
+                    method="POST">
+
+                <button
+                        type="submit"
+                        class="btn btn-danger btn-sm">
+
+                    Obriši
+
+                </button>
+
+            </form>
+
+        </td>
+
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

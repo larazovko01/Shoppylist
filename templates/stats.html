@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Najčešće posjećene trgovine </h1>
+
+
+<div class="mx-auto" style="max-width: 650px;">
+    <canvas id="myChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const trgovine = {{ trgovine | tojson }};
+const labels = Object.keys(trgovine);
+const values = Object.values(trgovine);
+
+
+const ctx = document.getElementById('myChart');
+
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Broj shopping lista',
+            data: values,
+            backgroundColor: [
+                '#b5838d'
+            ]
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    precision: 0
+                }
+            }
+        }
+    }
+});
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="mb-3">
+    Trgovina: {{ lista.trgovina }}
+</h1>
+<p class="text-muted">
+    Datum:
+    {{ lista.datum[8:10] }}.{{ lista.datum[5:7] }}.{{ lista.datum[0:4] }}
+</p>
+<a href="/liste" class="btn btn-outline-secondary mb-3">
+    ← Povratak na liste
+</a>
+<hr>
+<h3>
+    Proizvodi ({{ proizvodi|length }})
+</h3>
+<div class="list-group mb-4">
+{% for proizvod in proizvodi %}
+    <div class="list-group-item">
+        <form
+            action="/proizvod/toggle/{{ proizvod.id }}"
+            method="POST"
+            style="display:inline;">
+            <input
+                type="checkbox"
+                onchange="this.form.submit()"
+                {% if proizvod.kupljeno %}checked{% endif %}>
+        </form>
+        <strong>{{ proizvod.naziv }}</strong>
+        <span class="text-muted">
+            ({{ proizvod.kolicina }})
+        </span>
+        <form
+            action="/proizvod/obrisi/{{ proizvod.id }}"
+            method="POST"
+            style="display:inline;">
+            <button
+                type="submit"
+                class="btn btn-sm btn-danger ms-2">
+                Obriši
+            </button>
+        </form>
+    </div>
+{% endfor %}
+</div>
+<hr>
+<h3>Dodaj proizvod</h3>
+<form action="/liste/{{ lista.id }}/dodaj-proizvod" method="POST">
+    <div class="mb-3">
+        <label class="form-label">
+            Naziv proizvoda
+        </label>
+        <input
+            type="text"
+            name="naziv"
+            class="form-control"
+            required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">
+            Količina
+        </label>
+        <input
+            type="number"
+            name="kolicina"
+            class="form-control"
+            required>
+    </div>
+    <button
+        type="submit"
+        class="btn btn-secondary">
+
+        Dodaj proizvod
+    </button>
+</form>
+{% endblock %}
