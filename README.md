@@ -77,7 +77,7 @@ Projekt je izrađen korištenjem Flask web okvira, PonyORM-a i SQLite baze podat
 
 ```bash
 cd ~/Downloads
-git clone <url-repozitorija>
+git clone https://github.com/larazovko01/Shoppylist
 cd Shoppylist
 ```
 
